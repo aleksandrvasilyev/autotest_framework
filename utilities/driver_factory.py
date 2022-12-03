@@ -1,5 +1,7 @@
 from selenium.webdriver import Chrome, Firefox, Edge
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.edge.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager

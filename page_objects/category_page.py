@@ -16,6 +16,7 @@ class CategoryPage(BasePage):
     __from_high_to_low_sorting = (By.XPATH, '//*[@id="products-orderby"]/option[@value="11"]')
     __prices_of_products = (By.XPATH, '//span[@class="price actual-price"]')
     __from_low_to_high_sorting = (By.XPATH, '//*[@id="products-orderby"]/option[@value="10"]')
+    __ajax_products_loading = (By.XPATH, "//*[@class='ajax-products-busy'][contains(@style, 'display: none')]")
 
     def category_name(self):
         return self._select_element(self.__category_name).text
@@ -35,12 +36,12 @@ class CategoryPage(BasePage):
 
     def change_sorting_high_to_low(self):
         self._click(self.__from_high_to_low_sorting)
-        time.sleep(1)
+        self._wait(self.__ajax_products_loading)
         return self
 
     def change_sorting_low_to_high(self):
         self._click(self.__from_low_to_high_sorting)
-        time.sleep(1)
+        self._wait(self.__ajax_products_loading)
         return self
 
     def prices(self):

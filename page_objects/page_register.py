@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from my_framework.utilities.web_ui.base_page import BasePage
 from random import randint
+from my_framework.utilities.read_configs import ReadConfig
 
 
 class RegisterPage(BasePage):
@@ -11,9 +12,9 @@ class RegisterPage(BasePage):
     __gender_male = (By.XPATH, '//label[@for="gender-male"]')
     __first_name = (By.XPATH, '//input[@id="FirstName"]')
     __last_name = (By.XPATH, '//input[@id="LastName"]')
-    __birthday_day = (By.XPATH, '//select[@name="DateOfBirthDay"]/option[@value="25"]')
-    __birthday_month = (By.XPATH, '//select[@name="DateOfBirthMonth"]/option[@value="3"]')
-    __birthday_year = (By.XPATH, '//select[@name="DateOfBirthYear"]/option[@value="1994"]')
+    __birthday_day = (By.XPATH, f'//select[@name="DateOfBirthDay"]/option[@value="{ReadConfig.get_user_day_of_birth()}"]')
+    __birthday_month = (By.XPATH, f'//select[@name="DateOfBirthMonth"]/option[@value="{ReadConfig.get_user_month_of_birth()}"]')
+    __birthday_year = (By.XPATH, f'//select[@name="DateOfBirthYear"]/option[@value="{ReadConfig.get_user_year_of_birth()}"]')
     __email = (By.XPATH, '//input[@id="Email"]')
     __password1 = (By.XPATH, '//input[@id="Password"]')
     __password2 = (By.XPATH, '//input[@id="ConfirmPassword"]')
@@ -37,20 +38,20 @@ class RegisterPage(BasePage):
         self._click(self.__register_button)
         return self
 
-    def check_user_logged_in(self):
+    def user_logged_in(self):
         return self._is_visible(self.__result) and self._is_visible(self.__logout_button)
 
-    def check_for_firstname_error(self):
+    def firstname_error(self):
         return self._is_visible(self.__error_message_firstname) and 'required' in self._select_element(
             self.__error_message_firstname).text
 
-    def check_for_email_error(self):
+    def email_error(self):
         return self._is_visible(self.__error_message_email) and 'required' in self._select_element(
             self.__error_message_email).text
 
-    def check_for_password_match(self):
+    def password_match(self):
         return self._is_visible(self.__error_message_password) and 'do not match' in self._select_element(self.__error_message_password).text
 
-    def check_for_password(self):
+    def password(self):
         return self._is_visible(self.__error_message_password) and 'required' in self._select_element(
             self.__error_message_password).text

@@ -22,7 +22,7 @@ def test_change_viewmode(open_index_page):
 
 
 @pytest.mark.regression
-def test_sort_by_price_from_high(open_index_page):
+def test_sort_by_price_from_high_to_low(open_index_page):
     index_page = open_index_page
     price_list = index_page.click_to_category().change_sorting_high_to_low().prices()
     price_list_sort = sorted(price_list, reverse=True)
@@ -30,7 +30,7 @@ def test_sort_by_price_from_high(open_index_page):
 
 
 @pytest.mark.regression
-def test_sort_by_price_from_low(open_index_page):
+def test_sort_by_price_from_low_to_high(open_index_page):
     index_page = open_index_page
     price_list = index_page.click_to_category().change_sorting_low_to_high().prices()
     price_list_sort = sorted(price_list)

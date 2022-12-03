@@ -11,7 +11,7 @@ def test_product_page_check_name(open_index_page):
 @pytest.mark.smoke
 def test_add_to_cart(open_index_page):
     index = open_index_page
-    assert index.click_to_product().select_options().add_to_cart().check_for_success_message('shopping cart')
+    assert index.click_to_product().select_options().add_to_cart().for_success_message('shopping cart')
 
 
 @pytest.mark.regression
@@ -23,13 +23,13 @@ def test_add_to_cart_without_options(open_index_page):
 @pytest.mark.smoke
 def test_add_to_compare(open_index_page):
     index = open_index_page
-    assert index.click_to_product().add_to_compare().check_for_success_message('product comparison')
+    assert index.click_to_product().add_to_compare().for_success_message('product comparison')
 
 
 @pytest.mark.smoke
 def test_add_to_wishlist(open_index_page):
     index = open_index_page
-    assert index.click_to_product().select_options().add_to_wishlist().check_for_success_message('wishlist')
+    assert index.click_to_product().select_options().add_to_wishlist().for_success_message('wishlist')
 
 
 @pytest.mark.regression
@@ -41,5 +41,5 @@ def test_add_to_wishlist_without_options(open_index_page):
 @pytest.mark.regression
 def test_add_to_cart_negative_quantity(open_index_page):
     index = open_index_page
-    assert index.click_to_product().select_options().change_quantity('-1').add_to_cart().check_for_error_message(
+    assert index.click_to_product().select_options().change_quantity('-1').add_to_cart().for_error_message(
         'Quantity should be positive')

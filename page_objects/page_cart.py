@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 import time
 from my_framework.utilities.web_ui.base_page import BasePage
+from my_framework.utilities.read_configs import ReadConfig
 
 
 class CartPage(BasePage):
@@ -33,7 +34,7 @@ class CartPage(BasePage):
     __button_confirm = (By.XPATH, '//button[@class="button-1 confirm-order-next-step-button"]')
     __succes_message = (By.XPATH, '//div[@class="section order-completed"]//div[@class="title"]/strong')
 
-    def check_count(self):
+    def count(self):
         return len(self._count_elements(self.__count_products_in_cart))
 
     def change_quantity(self, value):
@@ -41,31 +42,49 @@ class CartPage(BasePage):
         self._click(self.__update_cart)
         return self
 
-    def check_quantity(self):
+    def quantity(self):
         return self._select_element(self.__input_quantity).get_attribute('value')
 
-    def check_message_error(self):
+    def message_error(self):
         return self._select_element(self.__message_error).text
 
     def remove_product(self):
         self._click(self.__remove_link)
         return self._select_element(self.__empty_cart_message).text
 
-    def checkout(self):
+    def continue_checkout(self):
         self._click(self.__terms_accept)
         self._click(self.__checkout_button)
+        return self
+
+    def checkout_as_guest(self):
         self._click(self.__checkout_as_guest)
-        self._send_keys(self.__first_name, 'alex')
-        self._send_keys(self.__last_name, 'vas')
-        self._send_keys(self.__email, 'test@gmail.com')
+        return self
+
+    def fill_user_data(self):
+        self._send_keys(self.__first_name, ReadConfig.get_user_firstname())
+        self._send_keys(self.__last_name, ReadConfig.get_user_lastname())
+        self._send_keys(self.__email, ReadConfig.get_user_email())
         self._click(self.__country)
-        self._send_keys(self.__city, 'NY')
-        self._send_keys(self.__address1, 'freedom str.')
-        self._send_keys(self.__zip_code, '1234')
-        self._send_keys(self.__phone, '+38096123456')
+        self._send_keys(self.__city, ReadConfig.get_user_city())
+        self._send_keys(self.__address1, ReadConfig.get_user_address())
+        self._send_keys(self.__zip_code, ReadConfig.get_user_zipcode())
+        self._send_keys(self.__phone, ReadConfig.get_user_phone())
         self._click(self.__button_continue)
+        return self
+
+    def shipping_method(self):
         self._click(self.__button_continue_1)
+        return self
+
+    def payment_method(self):
         self._click(self.__button_continue_2)
+        return self
+
+    def payment_information(self):
         self._click(self.__button_continue_3)
+        return self
+
+    def confirm_order(self):
         self._click(self.__button_confirm)
         return self._select_element(self.__succes_message).text

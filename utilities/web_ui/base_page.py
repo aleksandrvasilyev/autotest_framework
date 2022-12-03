@@ -18,7 +18,7 @@ class BasePage:
     def __wait_until_element_visible(self, locator):
         return self.__wait.until(EC.visibility_of_element_located(locator))
 
-    def __wait_until_elemets_located(self, locator):
+    def __wait_until_elements_located(self, locator):
         return self.__wait.until(EC.presence_of_all_elements_located(locator))
 
     def _send_keys(self, locator, value):
@@ -36,6 +36,11 @@ class BasePage:
             return True
         except TimeoutException:
             return False
+
+    def _wait(self, locator):
+        return self.__wait_until_element_located(locator)
+        # return webdriver.wait().until(ExpectedConditions.presenceOfElementLocated(
+        #     By.xpath("//*[@id='some_input'][contains(@style, 'display: block')]")));
 
     def _hover(self, locator):
         element = self.__wait_until_element_located(locator)

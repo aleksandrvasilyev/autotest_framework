@@ -35,9 +35,12 @@ class ProductPage(BasePage):
 
     def add_to_cart(self):
         self._click(self.__add_to_cart_button)
+        self._wait(self.__notification_success_close_button)
+        self._click(self.__notification_success_close_button)
         return self
 
     def go_to_cart(self):
+        self._wait(self.__cart_link)
         self._click(self.__cart_link)
         return CartPage(self.__driver)
 
@@ -69,8 +72,8 @@ class ProductPage(BasePage):
         self._send_keys(self.__input_quantity, qty)
         return self
 
-    def check_for_error_message(self, message):
+    def for_error_message(self, message):
         return self.error_message == message and self.is_notification_error
 
-    def check_for_success_message(self, message):
+    def for_success_message(self, message):
         return self.success_message == message and self.is_notification_success

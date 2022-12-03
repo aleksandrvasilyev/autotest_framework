@@ -14,19 +14,17 @@ class IndexPage(BasePage):
         super().__init__(self.__driver)
 
     __welcome_text = (By.XPATH, '//div[@class="topic-block-title"]/h2')
-    __link_to_product = (By.XPATH,
-                         '//*[@class="product-grid home-page-product-grid"]//*[@class="item-box"][1]//*[@class="details"]//a')
-    __category_link = (By.XPATH, '//ul[@class="top-menu notmobile"]/li[1]//li[2]/a')
-    __category_main_link = (By.XPATH, '//ul[@class="top-menu notmobile"]/li[1]/a')
+    __link_to_product = (By.XPATH, '//div[@data-productid="1"]//a')
+    __category_link = (By.XPATH, '//ul[@class="top-menu notmobile"]//a[@href="/notebooks"]')
+    __category_main_link = (By.XPATH, '//ul[@class="top-menu notmobile"]//a[@href="/computers"]')
     __register_link = (By.XPATH, '//div[@class="header-links"]//a[@class="ico-register"]')
     __subscribe_input = (By.XPATH, '//input[@id="newsletter-email"]')
     __subscribe_button = (By.XPATH, '//button[@id="newsletter-subscribe-button"]')
     __subscribe_result = (By.XPATH, '//div[@id="newsletter-result-block"]')
-    __currency_euro = (By.XPATH, '//*[@id="customerCurrency"]/option[2]')
-    __price_with_currency_in_product = (By.XPATH,
-                                        '//*[@class="product-grid home-page-product-grid"]//*[@class="item-box"][1]//*[@class="details"]//div[@class="prices"]')
-    __button_to_compare = (By.XPATH,
-                           '//*[@class="product-grid home-page-product-grid"]//*[@class="item-box"][1]//*[@class="details"]//button[2]')
+    __subscribe_result_message = (By.XPATH, '//div[@id="newsletter-result-block" and contains(text(),"Thank you")]')
+    __currency_euro = (By.XPATH, '//*[@id="customerCurrency"]/option[(text())="Euro"]')
+    __price_with_currency_in_product = (By.XPATH, '//div[@data-productid="1"]//div[@class="prices"]')
+    __button_to_compare = (By.XPATH, '//div[@data-productid="1"]//button[contains(@class, "compare")]')
     __success_close_button = (By.XPATH, '//div[@class="bar-notification success"]/span[@class="close"]')
 
     def welcome_text(self):
@@ -50,20 +48,20 @@ class IndexPage(BasePage):
         self._click(self.__subscribe_button)
         return self
 
-    def check_subscribe_message(self):
-        time.sleep(1)
+    def subscribe_message(self):
+        self._wait(self.__subscribe_result_message)
         return self._select_element(self.__subscribe_result).text
 
     def set_currency_euro(self):
         self._click(self.__currency_euro)
         return self
 
-    def check_current_currency(self):
+    def current_currency(self):
         return self._select_element(self.__price_with_currency_in_product).text[0]
 
     def add_to_compare(self):
         self._click(self.__button_to_compare)
         return self
 
-    def check_added_to_compare(self):
+    def added_to_compare(self):
         return self._is_visible(self.__success_close_button)
