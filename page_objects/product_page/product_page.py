@@ -1,7 +1,7 @@
 
 from selenium.webdriver.common.by import By
 
-from my_framework.page_objects.page_cart import CartPage
+from my_framework.page_objects.cart_page.page_cart import CartPage
 from my_framework.utilities.web_ui.base_page import BasePage
 
 
