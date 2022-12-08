@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 from my_framework.utilities.web_ui.base_page import BasePage
-from random import randint
 from my_framework.utilities.read_configs import ReadConfig
 
 
@@ -9,12 +8,18 @@ class RegisterPage(BasePage):
         self.__driver = driver
         super().__init__(self.__driver)
 
+    day_of_birth = '25'  # need to get it from configuration.json
+    month_of_birth = '3'  # need to get it from configuration.json
+    year_of_birth = '1994'  # need to get it from configuration.json
+
     __gender_male = (By.XPATH, '//label[@for="gender-male"]')
     __first_name = (By.XPATH, '//input[@id="FirstName"]')
     __last_name = (By.XPATH, '//input[@id="LastName"]')
-    __birthday_day = (By.XPATH, f'//select[@name="DateOfBirthDay"]/option[@value="{ReadConfig.get_user_day_of_birth()}"]')
-    __birthday_month = (By.XPATH, f'//select[@name="DateOfBirthMonth"]/option[@value="{ReadConfig.get_user_month_of_birth()}"]')
-    __birthday_year = (By.XPATH, f'//select[@name="DateOfBirthYear"]/option[@value="{ReadConfig.get_user_year_of_birth()}"]')
+    __birthday_day = (By.XPATH, f'//select[@name="DateOfBirthDay"]/option[@value="{day_of_birth}"]')
+    __birthday_month = (
+        By.XPATH, f'//select[@name="DateOfBirthMonth"]/option[@value="{month_of_birth}"]')
+    __birthday_year = (
+        By.XPATH, f'//select[@name="DateOfBirthYear"]/option[@value="{year_of_birth}"]')
     __email = (By.XPATH, '//input[@id="Email"]')
     __password1 = (By.XPATH, '//input[@id="Password"]')
     __password2 = (By.XPATH, '//input[@id="ConfirmPassword"]')
@@ -50,7 +55,8 @@ class RegisterPage(BasePage):
             self.__error_message_email).text
 
     def password_match(self):
-        return self._is_visible(self.__error_message_password) and 'do not match' in self._select_element(self.__error_message_password).text
+        return self._is_visible(self.__error_message_password) and 'do not match' in self._select_element(
+            self.__error_message_password).text
 
     def password(self):
         return self._is_visible(self.__error_message_password) and 'required' in self._select_element(

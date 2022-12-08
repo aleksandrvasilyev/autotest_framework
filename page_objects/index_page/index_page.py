@@ -1,10 +1,8 @@
-import time
-
 from selenium.webdriver.common.by import By
 
-from my_framework.page_objects.category_page import CategoryPage
-from my_framework.page_objects.page_product import ProductPage
-from my_framework.page_objects.page_register import RegisterPage
+from my_framework.page_objects.category_page.category_page import CategoryPage
+from my_framework.page_objects.product_page.product_page import ProductPage
+from my_framework.page_objects.register_page.register_page import RegisterPage
 from my_framework.utilities.web_ui.base_page import BasePage
 
 
@@ -22,6 +20,7 @@ class IndexPage(BasePage):
     __subscribe_button = (By.XPATH, '//button[@id="newsletter-subscribe-button"]')
     __subscribe_result = (By.XPATH, '//div[@id="newsletter-result-block"]')
     __subscribe_result_message = (By.XPATH, '//div[@id="newsletter-result-block" and contains(text(),"Thank you")]')
+    __subscribe_result_message_error = (By.XPATH, '//div[@id="newsletter-result-block" and contains(text(),"Enter valid")]')
     __currency_euro = (By.XPATH, '//*[@id="customerCurrency"]/option[(text())="Euro"]')
     __price_with_currency_in_product = (By.XPATH, '//div[@data-productid="1"]//div[@class="prices"]')
     __button_to_compare = (By.XPATH, '//div[@data-productid="1"]//button[contains(@class, "compare")]')
@@ -50,6 +49,10 @@ class IndexPage(BasePage):
 
     def subscribe_message(self):
         self._wait(self.__subscribe_result_message)
+        return self._select_element(self.__subscribe_result).text
+
+    def subscribe_message_error(self):
+        self._wait(self.__subscribe_result_message_error)
         return self._select_element(self.__subscribe_result).text
 
     def set_currency_euro(self):

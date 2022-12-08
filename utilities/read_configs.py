@@ -1,8 +1,8 @@
 import configparser
 
-from my_framework.CONSTANTS import ROOD_DIR
+from my_framework.CONSTANTS import ROOT_DIR
 
-abs_path = f'{ROOD_DIR}/configurations/configuration.ini'
+abs_path = f'{ROOT_DIR}/configurations/configuration.ini'
 config = configparser.RawConfigParser()
 config.read(abs_path)
 

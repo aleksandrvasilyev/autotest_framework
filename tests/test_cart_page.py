@@ -34,7 +34,7 @@ def test_remove_product_from_cart(open_index_page):
 
 
 @pytest.mark.smoke
-def test_checkout(open_index_page):
+def test_checkout(open_index_page, env):
     index = open_index_page
-    cart = index.click_to_product().select_options().add_to_cart().go_to_cart().continue_checkout().checkout_as_guest().fill_user_data().shipping_method().payment_method().payment_information().confirm_order()
+    cart = index.click_to_product().select_options().add_to_cart().go_to_cart().continue_checkout().checkout_as_guest().fill_user_data(env.firstname, env.lastname, env.email, env.city, env.address, env.zipcode, env.phone).shipping_method().payment_method().payment_information().confirm_order()
     assert cart == 'Your order has been successfully processed!'

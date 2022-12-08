@@ -1,7 +1,6 @@
-
 from selenium.webdriver.common.by import By
 
-from my_framework.page_objects.cart_page.page_cart import CartPage
+from my_framework.page_objects.cart_page.cart_page import CartPage
 from my_framework.utilities.web_ui.base_page import BasePage
 
 
@@ -35,9 +34,11 @@ class ProductPage(BasePage):
 
     def add_to_cart(self):
         self._click(self.__add_to_cart_button)
+        return self
+
+    def close_notification_success(self):
         self._wait(self.__notification_success_close_button)
         self._click(self.__notification_success_close_button)
-        return self
 
     def go_to_cart(self):
         self._wait(self.__cart_link)
@@ -77,3 +78,12 @@ class ProductPage(BasePage):
 
     def for_success_message(self, message):
         return self.success_message == message and self.is_notification_success
+
+
+
+
+
+
+
+
+

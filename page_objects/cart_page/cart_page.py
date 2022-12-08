@@ -1,7 +1,5 @@
 from selenium.webdriver.common.by import By
-import time
 from my_framework.utilities.web_ui.base_page import BasePage
-from my_framework.utilities.read_configs import ReadConfig
 
 
 class CartPage(BasePage):
@@ -61,15 +59,15 @@ class CartPage(BasePage):
         self._click(self.__checkout_as_guest)
         return self
 
-    def fill_user_data(self):
-        self._send_keys(self.__first_name, ReadConfig.get_user_firstname())
-        self._send_keys(self.__last_name, ReadConfig.get_user_lastname())
-        self._send_keys(self.__email, ReadConfig.get_user_email())
+    def fill_user_data(self, firstname, lastname, email, city, address, zipcode, phone):
+        self._send_keys(self.__first_name, firstname)
+        self._send_keys(self.__last_name, lastname)
+        self._send_keys(self.__email, email)
         self._click(self.__country)
-        self._send_keys(self.__city, ReadConfig.get_user_city())
-        self._send_keys(self.__address1, ReadConfig.get_user_address())
-        self._send_keys(self.__zip_code, ReadConfig.get_user_zipcode())
-        self._send_keys(self.__phone, ReadConfig.get_user_phone())
+        self._send_keys(self.__city, city)
+        self._send_keys(self.__address1, address)
+        self._send_keys(self.__zip_code, zipcode)
+        self._send_keys(self.__phone, phone)
         self._click(self.__button_continue)
         return self
 

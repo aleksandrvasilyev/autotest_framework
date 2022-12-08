@@ -16,7 +16,7 @@ def test_subscribe_positive(open_index_page):
 @pytest.mark.regression
 def test_subscribe_negative(open_index_page):
     index_page = open_index_page
-    assert 'Enter valid email' in index_page.subscribe('test').subscribe_message()
+    assert 'Enter valid email' in index_page.subscribe('test').subscribe_message_error()
 
 
 @pytest.mark.smoke

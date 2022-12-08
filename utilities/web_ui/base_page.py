@@ -39,8 +39,6 @@ class BasePage:
 
     def _wait(self, locator):
         return self.__wait_until_element_located(locator)
-        # return webdriver.wait().until(ExpectedConditions.presenceOfElementLocated(
-        #     By.xpath("//*[@id='some_input'][contains(@style, 'display: block')]")));
 
     def _hover(self, locator):
         element = self.__wait_until_element_located(locator)
