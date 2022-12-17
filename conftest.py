@@ -2,6 +2,7 @@ import json
 
 import pytest
 
+from my_framework.data_classes.user import User
 from my_framework.page_objects.index_page.index_page import IndexPage
 from my_framework.utilities.configuration import Configuration
 from my_framework.utilities.driver_factory import DriverFactory
@@ -39,3 +40,8 @@ def open_index_page(create_driver):
     :return: opened index_page in webdriver
     """
     return IndexPage(create_driver)
+
+
+@pytest.fixture()
+def create_user():
+    return User()
