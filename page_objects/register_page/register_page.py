@@ -1,8 +1,11 @@
 from selenium.webdriver.common.by import By
+
+from my_framework.utilities.decorators import auto_step
 from my_framework.utilities.web_ui.base_page import BasePage
 from my_framework.utilities.read_configs import ReadConfig
 
 
+@auto_step
 class RegisterPage(BasePage):
     def __init__(self, driver):
         self.__driver = driver

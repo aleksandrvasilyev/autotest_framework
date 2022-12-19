@@ -1,9 +1,11 @@
 from selenium.webdriver.common.by import By
 
 from my_framework.page_objects.cart_page.cart_page import CartPage
+from my_framework.utilities.decorators import auto_step
 from my_framework.utilities.web_ui.base_page import BasePage
 
 
+@auto_step
 class ProductPage(BasePage):
     def __init__(self, driver):
         self.__driver = driver
@@ -78,12 +80,3 @@ class ProductPage(BasePage):
 
     def for_success_message(self, message):
         return self.success_message == message and self.is_notification_success
-
-
-
-
-
-
-
-
-
