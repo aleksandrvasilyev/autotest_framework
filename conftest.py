@@ -1,0 +1,61 @@
+import json
+from contextlib import suppress
+
+import pytest
+
+from my_framework.data_classes.user import User
+from my_framework.page_objects.index_page.index_page import IndexPage
+from my_framework.utilities.configuration import Configuration
+from my_framework.utilities.driver_factory import DriverFactory
+from my_framework.utilities.read_configs import ReadConfig
+from my_framework.CONSTANTS import ROOT_DIR
+import allure
+
+
+@pytest.hookimpl(hookwrapper=True, tryfirst=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, "rep_" + rep.when, rep)
+    return rep
+
+
+@pytest.fixture(scope="session")
+def env():
+    with open(f'{ROOT_DIR}/configurations/configuration.json') as f:
+        data = f.read()
+        json_to_dict = json.loads(data)
+    config = Configuration(**json_to_dict)
+    return config
+
+
+@pytest.fixture()
+def create_driver(env, request):
+    """
+    Fixture creates webdriver
+    :return: opened base page in webdriver
+    """
+    chrome_driver = DriverFactory.create_driver(env.browser_id)
+    chrome_driver.maximize_window()
+    chrome_driver.get(env.base_url)
+    yield chrome_driver
+    if request.node.rep_call.failed:
+        with suppress(Exception):
+            allure.attach(chrome_driver.get_screenshot_as_png(), name=request.function.__name__,
+                          attachment_type=allure.attachment_type.PNG)
+    chrome_driver.quit()
+
+
+@pytest.fixture()
+def open_index_page(create_driver):
+    """
+    Fixture opens index page
+    :param create_driver: function
+    :return: opened index_page in webdriver
+    """
+    return IndexPage(create_driver)
+
+
+@pytest.fixture()
+def create_user():
+    return User()
